@@ -15,6 +15,13 @@
 body{
     position: relative;
 }
+footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
 #head{
     font-family: 'Rock Salt';
 }
@@ -54,7 +61,7 @@ input[type=text]{
 
 .each-line{
     padding: 20;
-    padding-left: 4%;
+    padding-left: 7em;
 }
 .wrap{
     position: relative;
@@ -169,29 +176,26 @@ input[type=text]{
             opacity: 0;
             position: absolute;
             top: 50%;
-            transition: all .7s ease-in;
+          
             background-color: white;
             width: 100%;
         }
         .image:hover .rating-text{
             margin-top: 8%;
+            transition: .7s ease-in;
             
             opacity: 1;
 
         }
         .image:hover img{
             transform: scale(1.2);
+            transition: 1s ease;
         }
     
         .image:hover .hh{
             margin-top: 24%;
-        }
-        .image{
-            overflow: hidden;
-        }    
-        img{
-            transition:  transform 1s ease;
-        }
-        .hh{
             transition: .5s ease-in;
         }
+        .image{
+            overflow: hidden
+        }    
