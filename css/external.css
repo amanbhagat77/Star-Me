@@ -1,0 +1,197 @@
+.nav-masthead .nav-link {
+  border-bottom: .25rem solid transparent;
+    color:whitesmoke;
+}
+
+.nav-masthead .nav-link:hover,.nav-masthead .nav-link:focus{
+    
+     border-bottom-color: rgba(255, 255, 255, .25);
+    transition: .2s ease-in;
+    
+}
+.navbar{
+    z-index: 9999;
+}
+body{
+    position: relative;
+}
+#head{
+    font-family: 'Rock Salt';
+}
+
+
+#myVideo{
+    position: fixed;
+    z-index: -1;
+    
+}
+.bg{
+    z-index: 1;
+}
+.title-head{
+    text-align: center; 
+    margin-top: 1.5em;
+    font-family: Times New Roman;
+    font-size: 65;
+   
+    transform: opacity 2s ease-in;
+    animation: fadein 4s;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+input[type=text]{
+    background-image: url('/images/search.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+}
+.form-inline{
+    
+    margin-right: 2.5em;
+}
+/* Section 2 CSS */
+
+.each-line{
+    padding: 20;
+    padding-left: 4%;
+}
+.wrap{
+    position: relative;
+}
+.category{
+    padding: 15;
+}
+.wrap:hover .name{
+    opacity: 0.3;
+    transition: .2s ease-in;
+}
+.wrap:hover .middle{
+    opacity: 1;
+}
+
+.middle{
+    transform: translate(-50%,50%);
+    position: absolute;
+    top: 45%;
+    left:50%;
+    opacity: 0;
+    transition: .2s ease-in;
+}
+.view-button{
+    margin-left: 80%;
+}
+.Rest_of_categories{
+    display: none;   
+}
+
+
+
+
+
+/* Login DropDown CSS */
+#login-dp{
+    min-width: 300px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:14px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    width: 100%;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0    
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+
+
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc 
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+#google{
+    font-family: roboto;
+}
+.btn-profile {
+  color: #fff;
+  background-color: #0c5460 ;
+  border-color: #0c5460;
+}
+
+.btn-profile:hover {
+  color: #fff;
+  background-color: #46D8D2;
+  border-color: #46D8D2;
+}
+
+.btn-profile:focus, .btn-profile.focus {
+  box-shadow: 0 0 0 0.2rem #46D8D2;
+}
+
+
+    
+/* Profile Cards */
+.rating-text{
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            transition: all .7s ease-in;
+            background-color: white;
+            width: 100%;
+        }
+        .image:hover .rating-text{
+            margin-top: 8%;
+            
+            opacity: 1;
+
+        }
+        .image:hover img{
+            transform: scale(1.2);
+        }
+    
+        .image:hover .hh{
+            margin-top: 24%;
+        }
+        .image{
+            overflow: hidden;
+        }    
+        img{
+            transition:  transform 1s ease;
+        }
+        .hh{
+            transition: .5s ease-in;
+        }
