@@ -10,3 +10,13 @@ $(document).ready(function(){
     
  }); 
 });
+
+$(document).ready(function(){
+    $(".hacker").click(function(){
+        $(".c-t").text("top");
+        console.log("hacker is pressed");
+        
+        
+        
+    })
+});
