@@ -1,3 +1,28 @@
+<?php 
+  session_start(); 
+
+  if (!isset($_SESSION['username'])) {
+  	$_SESSION['msg'] = "You must log in first";
+  	header('location: mianpage.php');
+  }
+  if (isset($_GET['logout'])) {
+  	session_destroy();
+  	unset($_SESSION['username']);
+  	header("location: mianpage.php");
+  }
+
+  $connect = mysqli_connect("localhost", "root", "", "user");  
+  $user_id = $_SESSION['user_id'];
+  if(isset($_POST["insert"]))  
+ {  
+      $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));  
+      $query = "UPDATE users_starme SET image = '$file' where user_id = '$user_id'";  
+      if(mysqli_query($connect, $query))  
+      {  
+           echo '<script>alert("Image Inserted into Database")</script>';  
+      }  
+ }  
+ ?>  
 <html>
 <title>Profile</title>
 <head>
@@ -39,47 +64,9 @@
             <a class="nav-link" href="categories.html">Categories</a>
         </li>
              <li class="nav-item active && dropdown">
-          <a href="#" class="nav-link && dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-			<ul id="login-dp" class="dropdown-menu">
-				<li>
-					 <div class="row">
-							<div class="col-md-12">
-								Login via
-								<div class="social-buttons">
-									<a href="#" class="btn btn-fb"><i class="fab fa-facebook-f"></i> Facebook</a>
-									<a href="#" id="google" class="btn btn-danger"><i class="fab fa-google"></i> Google</a>
-								</div>
-                                or
-								 <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
-										<div class="form-group">
-											 <label class="sr-only" for="exampleInputEmail2">Email address</label>
-											 <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
-										</div>
-										<div class="form-group">
-											 <label class="sr-only" for="exampleInputPassword2">Password</label>
-											 <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-										</div>
-										<div class="form-group">
-											 <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-										</div>
-										<div class="checkbox">
-											 <label>
-											 <input type="checkbox"> keep me logged-in
-											 </label>
-										</div>
-								 </form>
-							</div>
-							<div class="bottom text-center">
-								New here ? <a href="#"><b>Join Us</b></a>
-							</div>
-					 </div>
-				</li>
-			</ul>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Contact Us</a>
-        </li>
+                 <a class="nav-link" href="mianpage.php?logout='1'" style="color: red;">logout</a>
+		  </li>
+        
     </ul>
 </nav>
 
@@ -91,16 +78,41 @@
             <div class="row coralbg white">
                 <div class="col-md-6 no-pad">
                     <div class="user-pad">
-                        <h3 id="name">Welcome back, Shubham</h3>
+                        <?php  if (isset($_SESSION['username'])) : ?>
+    	                   <p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
+                        <?php endif ?>
                         <h4 class="white"><i class="far fa-check-circle"></i> New Delhi</h4>
-                        <h4 class="white"><i class="far fa-meh "></i> Shubham30198</h4>
+                        <h4 class="white"><i class="far fa-meh "></i><?php  if (isset($_SESSION['username'])) : ?>
+    	                <?php echo $_SESSION['username']; ?>   
+                        <?php endif ?></h4>
                         <button type="button" class="btn btn-labeled btn-info" href="#">
-                            <span class="btn-label"><i class="fas fa-pencil-alt"></i></span>Update</button>
+                        <span class="btn-label"><i class="fas fa-pencil-alt"></i></span>Update</button>
                     </div>
                 </div>
                 <div class="col-md-6 no-pad">
-                    <div class="user-image">
-                        <img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">
+                    <div class="user-image wrap">
+                        <?php  
+                            $query = "SELECT image FROM users_starme where user_id='$user_id' ";  
+                            $result = mysqli_query($connect, $query);  
+                            
+                                $row = mysqli_fetch_array($result);
+                            if($row['image'] == NULL){
+                                
+                                echo ' <img src = "images/noavatar.png" height="240" width ="350" class="img-thumnail">';
+                            
+                            }
+                            else{
+                                echo '  
+                          
+                                    <img src="data:image/jpeg;base64,'.base64_encode($row['image'] ).'" height="240" width ="350" class="img-thumnail" />  
+                                    ';  
+                            }   
+                        ?>
+                        <div class="middle">
+                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModalCenter">
+                                Update Profile Picture
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -358,6 +370,31 @@
                      
     </div>
 </div>
+               
+    
+    
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Update Profile Picture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                         <img src="" id="profile-img-tag" width="200px" />
+                  </div>
+                  <div class="modal-footer">
+                    <form method="post" enctype="multipart/form-data">  
+                        <label for="image" class="btn btn-profile btn-outlined">Upload Image</label>
+                        <input type="file" name="image" id="image" style="display:none" />   
+                        <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-profile" />  
+                </form> 
+                  </div>
+                </div>
+              </div>
+            </div>
 </div>
 
 
